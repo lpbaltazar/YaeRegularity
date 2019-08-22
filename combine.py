@@ -8,7 +8,7 @@ import numpy as np
 
 from utils import readChunk, toCSV
 
-def combineMonth(data_dir, out_dir):
+def combineMonth(data_dir):
 	all_df = []
 	for f in sorted(os.listdir(data_dir)):
 		if f.endswith(".csv"):
