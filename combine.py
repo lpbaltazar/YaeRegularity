@@ -24,3 +24,5 @@ if __name__ == '__main__':
 	combineMonth("../events/march", "results/march_customers.csv")
 	combineMonth("../events/april", "results/april_customers.csv")
 	combineMonth("../events/may", "results/may_customers.csv")
+
+	combineMonth("results", "results/all_month.csv")
