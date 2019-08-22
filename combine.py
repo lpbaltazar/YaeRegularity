@@ -8,11 +8,22 @@ import numpy as np
 
 from utils import readChunk, toCSV
 
+
+def removeNotLoggedIn(df):
+	df["loggedin"] = df[["USERID", "PRIMARY_FINGERPRINT"]].apply(lambda x: 0 if re.search(x[1], x[0]) else 1, axis = 1)
+	df = df.loc[df.loggedin == 1]
+	print("logged in users: ", len(df))
+	df.drop('loggedin', axis = 1, inplace = True)
+	return df
+
 def combineMonth(data_dir, outfile):
 	all_df = []
 	for f in sorted(os.listdir(data_dir)):
 		if f.endswith(".csv"):
 			df = readChunk(os.path.join(data_dir, f))
+			df.USERID = df.USERID.astype(str)
+			df.PRIMARY_FINGERPRINT = df.PRIMARY_FINGERPRINT.astype(str)
+			df = removeNotLoggedIn(df)
 			all_df.append(df)
 	all_df = pd.concat(all_df)
 	toCSV(all_df, outfile, index = False)
