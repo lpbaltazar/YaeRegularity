@@ -19,7 +19,7 @@ style.use('bmh')
 file = "content_regularity.csv"
 
 df = readChunk(file, header = None)
-df.rename(columns = {0:'USERID', 1:'SESSION_ID', 2:'CONTENT_TYPE', 3:'PRIMARY_FINGERPRINT', 4:'SESSION_STARTDT_YEAR', 5:'SESSION_STARTDT_MONHT', 6:'SESSION_STARTDT_DAY', 7:'HOUR'}, inplace = True)
+df.rename(columns = {0:'USERID', 1:'SESSION_ID', 2:'CONTENT_TYPE', 3:'PRIMARY_FINGERPRINT', 4:'SESSION_STARTDT_YEAR', 5:'SESSION_STARTDT_MONTH', 6:'SESSION_STARTDT_DAY', 7:'HOUR'}, inplace = True)
 content_type = {'ABS-CBN - Show - Current': 1, 'ABS-CBN - Show - Old':2, 'Original Show':3, 'Original Movie':4, 'Movie':5, 'Live':6, 'Fast Cut':7, 'Other - Show':8, 'Preview':9, 'Trailer':10}
 
 df.CONTENT_TYPE = df.CONTENT_TYPE.astype(str)
