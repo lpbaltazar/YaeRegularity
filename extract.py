@@ -22,4 +22,9 @@ def main(data_dir, out_dir):
 			toCSV(df, os.path.join(out_dir, f), index = False)
 
 if __name__ == '__main__':
-	main("../events/2018/12", "../events/december")
+	# main("../events/2018/12", "../events/december")
+	main("../events/2019/01", "../events/january")
+	main("../events/2019/02", "../events/february")
+	main("../events/2019/03", "../events/march")
+	main("../events/2019/04", "../events/april")
+	main("../events/2019/05", "../events/may")
