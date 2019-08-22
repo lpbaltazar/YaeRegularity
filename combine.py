@@ -21,6 +21,7 @@ def combineMonth(data_dir, outfile):
 	for f in sorted(os.listdir(data_dir)):
 		if f.endswith(".csv"):
 			df = readChunk(os.path.join(data_dir, f))
+			df.dropna(subset = ['USERID'], inplace = True)
 			df.USERID = df.USERID.astype(str)
 			df.PRIMARY_FINGERPRINT = df.PRIMARY_FINGERPRINT.astype(str)
 			df = removeNotLoggedIn(df)
