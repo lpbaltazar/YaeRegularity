@@ -16,7 +16,7 @@ sns.set()
 style.use('seaborn-poster')
 style.use('bmh')
 
-file = "../content_regularity.csv"
+file = "content_regularity.csv"
 
 df = readChunk(file, header = None)
 df.rename(columns = {0:'USERID', 1:'SESSION_ID', 2:'CONTENT_TYPE', 3:'PRIMARY_FINGERPRINT', 4:'SESSION_STARTDT_YEAR', 5:'SESSION_STARTDT_MONHT', 6:'SESSION_STARTDT_DAY', 7:'HOUR'}, inplace = True)
