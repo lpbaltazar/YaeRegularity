@@ -16,6 +16,7 @@ def combineMonth(data_dir):
 			all_df.append(df)
 	all_df = pd.concat(all_df)
 	print(len(all_df))
+	print(len(all_df.USERID.unique()))
 
 if __name__ == '__main__':
 	combineMonth("../events/december")
