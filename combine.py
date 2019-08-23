@@ -45,14 +45,14 @@ def combineMonth(data_dir, outfile, check_login = False):
 				df.USERID = df.USERID.astype(str)
 				df.PRIMARY_FINGERPRINT = df.PRIMARY_FINGERPRINT.astype(str)
 				df = removeNotLoggedIn(df)
-			df['DAY'] = df[['SESSION_STARTDT_MONTH', 'SESSION_STARTDT_DAY']].apply(lambda x: getCustomerDay(x[0], x[1]), axis = 1)
-			df.CONTENT_TYPE = df.CONTENT_TYPE.astype(str)
-			df.SESSION_STARTDT_MONTH = df.SESSION_STARTDT_MONTH.astype(int)
-			df.SESSION_STARTDT_DAY = df.SESSION_STARTDT_DAY.astype(int)
-			df.HOUR = df.HOUR.astype(int)
-			df = df.loc[df.CONTENT_TYPE != 'nan']
+				df.CONTENT_TYPE = df.CONTENT_TYPE.astype(str)
+				df.SESSION_STARTDT_MONTH = df.SESSION_STARTDT_MONTH.astype(int)
+				df.SESSION_STARTDT_DAY = df.SESSION_STARTDT_DAY.astype(int)
+				df = df.loc[df.SESSION_STARTDT_MONTH != 11]
+				df['DAY'] = df[['SESSION_STARTDT_MONTH', 'SESSION_STARTDT_DAY']].apply(lambda x: getCustomerDay(x[0], x[1]), axis = 1)
+				df = df.loc[df.CONTENT_TYPE != 'nan']
 
-			df.replace({'CONTENT_TYPE':content_type}, inplace = True)
+				df.replace({'CONTENT_TYPE':content_type}, inplace = True)
 			all_df.append(df)
 	all_df = pd.concat(all_df)
 	toCSV(all_df, outfile, index = False)
@@ -65,4 +65,4 @@ if __name__ == '__main__':
 	combineMonth("../events/april", "results/april_customers.csv", check_login = True)
 	combineMonth("../events/may", "results/may_customers.csv", check_login = True)
 
-	# combineMonth("results", "all_month.csv")
+	combineMonth("results", "all_month.csv")

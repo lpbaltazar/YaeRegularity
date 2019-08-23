@@ -22,35 +22,13 @@ file = "all_month.csv"
 
 df = readChunk(file)
 # df.rename(columns = {0:'USERID', 1:'SESSION_ID', 2:'CONTENT_TYPE', 3:'PRIMARY_FINGERPRINT', 4:'SESSION_STARTDT_YEAR', 5:'SESSION_STARTDT_MONTH', 6:'SESSION_STARTDT_DAY', 7:'HOUR'}, inplace = True)
-content_type = {'ABS-CBN - Show - Current': 1, 'ABS-CBN - Show - Old':2, 'Original Show':3, 'Original Movie':4, 'Movie':5, 'Live':6, 'Fast Cut':7, 'Other - Show':8, 'Preview':9, 'Trailer':10}
 
-df.CONTENT_TYPE = df.CONTENT_TYPE.astype(str)
-df.SESSION_STARTDT_MONTH = df.SESSION_STARTDT_MONTH.astype(int)
-df.SESSION_STARTDT_DAY = df.SESSION_STARTDT_DAY.astype(int)
+df.CONTENT_TYPE = df.CONTENT_TYPE.astype(int)
+df.DAY = df.DAY.astype(int)
 df.HOUR = df.HOUR.astype(int)
-df = df.loc[df.CONTENT_TYPE != 'nan']
 
-df.replace({'CONTENT_TYPE':content_type}, inplace = True)
-print(df.head())
-
-def getCustomerDay(month, date):
-	if month == 12:
-		return date
-	elif month == 1:
-		return date+31
-	elif month == 2:
-		return date+31+31
-	elif month == 3:
-		return date+31+31+28
-	elif month == 4:
-		return date+31+31+28+31
-	else:
-		return date+31+31+28+31+30
-
-df['DAY'] = df[['SESSION_STARTDT_MONTH', 'SESSION_STARTDT_DAY']].apply(lambda x: getCustomerDay(x[0], x[1]), axis = 1)
 
 for user in df.USERID.unique():
-	if count == 10: break
 	temp = df.loc[df.USERID == user]
 	new_df = pd.DataFrame(index = list(range(0, 24)), columns = list(range(1, 183)))
 	for i in temp.index.unique():
