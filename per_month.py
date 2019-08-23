@@ -56,19 +56,16 @@ def combineMonth():
 				same = []
 				for i in colnames:
 					if re.search('_', i): same.append(i)
-				new_col = re.search('([0-9]+)_', same[0])[1]
-				for i in same:
 					new_df[i] = pd.to_numeric(new_df[i], errors = 'coerce')
-				# new_df[same] = new_df[same].astype(int)
-
-				new_df[new_col] = new_df[same].apply(lambda x: '1' if x[0]+x[1] >= 1 else np.nan, axis =1)
+				new_col = re.search('([0-9]+)_', same[0])[1]
+				new_df[new_col] = new_df[same].apply(lambda x: 1 if x[0]+x[1] >= 1 else np.nan, axis =1)
 				new_df.drop(same, axis = 1, inplace = True)
 
 	new_df.set_index('USERID', inplace = True)
 	cols = new_df.columns
-	new_df.replace('', np.nan, inplace = True)
 	new_df['first_occurence'] = new_df.apply(func, axis = 1)
-	new_df.fillna('0', inplace = True)
+	for i in cols:
+		new_df[i] = new_df[i].apply(lambda x: '0' if np.isnan(x) else '1')
 	new_df['total'] = new_df['first_occurence'].apply(lambda x: '1'*(32-int(x)))
 	new_df[cols] = new_df[cols].astype(str)
 	new_df['all'] = new_df[cols].apply(''.join, axis = 1)
