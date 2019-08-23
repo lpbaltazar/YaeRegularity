@@ -11,7 +11,7 @@ from utils import readChunk, toCSV
 
 content_type = 1
 colname = 'frequency_'+str(content_type)
-outfile = 'results/per_content'+str(content_type)+'.csv'
+outfile = 'results/per_content/'+str(content_type)+'.csv'
 
 data_dir = 'results'
 
@@ -43,7 +43,7 @@ def func(x):
 		return x.first_valid_index()
 
 def combineMonth():
-	new_df = pd.DataFrame
+	new_df = pd.DataFrame()
 	for f in sorted(os.listdir(data_dir+'/'+str(content_type))):
 		if f.endswith(".csv"):
 			file = os.path.join(data_dir+'/'+str(content_type), f)
@@ -55,17 +55,24 @@ def combineMonth():
 				colnames = new_df.columns
 				same = []
 				for i in colnames:
-					if re.search('_', r): same.append(i)
+					if re.search('_', i): same.append(i)
 				new_col = re.search('([0-9]+)_', same[0])[1]
-				new_df[new_col] = new_df[[same]].apply(lambda x: 1 if x[0]+x[1] >= 1 else np.nan. axis =1)
-				new_df.drop(same, axis = 1)
+				for i in same:
+					new_df[i] = pd.to_numeric(new_df[i], errors = 'coerce')
+				# new_df[same] = new_df[same].astype(int)
+
+				new_df[new_col] = new_df[same].apply(lambda x: '1' if x[0]+x[1] >= 1 else np.nan, axis =1)
+				new_df.drop(same, axis = 1, inplace = True)
+
 	new_df.set_index('USERID', inplace = True)
+	cols = new_df.columns
+	new_df.replace('', np.nan, inplace = True)
 	new_df['first_occurence'] = new_df.apply(func, axis = 1)
 	new_df.fillna('0', inplace = True)
 	new_df['total'] = new_df['first_occurence'].apply(lambda x: '1'*(32-int(x)))
 	new_df[cols] = new_df[cols].astype(str)
 	new_df['all'] = new_df[cols].apply(''.join, axis = 1)
-	print(new_df['total'])
+	print(new_df[['all', 'total']])
 	new_df[colname] = new_df[['all', 'total']].apply(lambda x: int(x[0], 2)/int(x[1], 2), axis = 1)
 	print(new_df[colname])
 	print(cols)
@@ -74,5 +81,5 @@ def combineMonth():
 	toCSV(new_df[cols], outfile, index = True)
 
 if __name__ == '__main__':
-	generateMonth()
-	# combineMonth()
+	# generateMonth()
+	combineMonth()
