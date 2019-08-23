@@ -29,6 +29,7 @@ df.HOUR = df.HOUR.astype(int)
 
 
 for user in df.USERID.unique():
+	if user != '072A34C9427A4C15B0ED31FE6BEC48D8': continue
 	temp = df.loc[df.USERID == user]
 	new_df = pd.DataFrame(index = list(range(0, 24)), columns = list(range(1, 183)))
 	for i in temp.index.unique():
