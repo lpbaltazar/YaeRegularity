@@ -3,6 +3,7 @@ warnings.filterwarnings("ignore")
 
 import os
 import time
+import re
 import pandas as pd
 import numpy as np
 
@@ -10,7 +11,7 @@ from utils import readChunk, toCSV
 
 content_type = 1
 colname = 'frequency_'+str(content_type)
-outfile = 'results/'+str(content_type)+'.csv'
+outfile = 'results/per_content'+str(content_type)+'.csv'
 
 data_dir = 'results'
 
@@ -33,7 +34,7 @@ def generateMonth():
 				group.DAY = group.DAY.apply(lambda x: np.nan if np.isnan(x) else '1')
 				group.rename(columns = {'DAY':str(i)}, inplace = True)
 				new_df = new_df.merge(group, how = 'left', on = 'USERID')
-			toCSV(new_df, 'results/'+str(content_type)+f)
+			toCSV(new_df, 'results/'+str(content_type)+'/'+f)
 
 def func(x):
 	if x.first_valid_index() is None:
@@ -51,7 +52,13 @@ def combineMonth():
 			else:
 				df = readChunk(file)
 				new_df = new_df.merge(df, how = 'left', on = 'USERID')
-
+				colnames = new_df.columns
+				same = []
+				for i in colnames:
+					if re.search('_', r): same.append(i)
+				new_col = re.search('([0-9]+)_', same[0])[1]
+				new_df[new_col] = new_df[[same]].apply(lambda x: 1 if x[0]+x[1] >= 1 else np.nan. axis =1)
+				new_df.drop(same, axis = 1)
 	new_df.set_index('USERID', inplace = True)
 	new_df['first_occurence'] = new_df.apply(func, axis = 1)
 	new_df.fillna('0', inplace = True)
