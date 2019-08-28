@@ -49,8 +49,8 @@ def plotHeatmap(data_dir):
 
 if __name__ == '__main__':
 	plotHeatmap("visualization/champions")
-	plotHeatmap("visualization/loyal")
-	plotHeatmap("visualization/promising")
-	plotHeatmap("visualization/binge")
-	plotHeatmap("visualization/atrisk")
-	plotHeatmap("visualization/lost")
+	# plotHeatmap("visualization/loyal")
+	# plotHeatmap("visualization/promising")
+	# plotHeatmap("visualization/binge")
+	# plotHeatmap("visualization/atrisk")
+	# plotHeatmap("visualization/lost")
