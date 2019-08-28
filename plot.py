@@ -18,13 +18,10 @@ sns.set()
 style.use('seaborn-poster')
 style.use('bmh')
 
-file = '../data/072A34C9427A4C15B0ED31FE6BEC48D8.csv'
-data_dir = 'visualization/champs'
-
 def plotHeatmap(data_dir):
 	for f in sorted(os.listdir(data_dir)):
 		if f.endswith(".csv"):
-			df = pd.read_csv(file)
+			df = pd.read_csv(os.path.join(data_dir, f))
 			plt.figure(figsize = (20, 9))
 			df.replace(hour, inplace = True)
 			df.set_index('HOUR', inplace = True)
