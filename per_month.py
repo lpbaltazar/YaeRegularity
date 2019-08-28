@@ -49,8 +49,16 @@ def combineMonth():
 			file = os.path.join(data_dir+'/'+str(content_type), f)
 			if len(new_df) == 0:
 				new_df = readChunk(file)
+				colnames = new_df.set_index('USERID').columns
+				for i in colnames:
+					new_df[i] = pd.to_numeric(new_df[i], errors = 'coerce')
 			else:
 				df = readChunk(file)
+				df.set_index('USERID', inplace = True)
+				colnames = df.columns
+				for i in colnames:
+					df[i] = pd.to_numeric(df[i], errors = 'coerce')
+				df.reset_index(inplace = True)
 				new_df = new_df.merge(df, how = 'left', on = 'USERID')
 				colnames = new_df.columns
 				same = []
