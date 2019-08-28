@@ -25,7 +25,7 @@ def plotHeatmap(data_dir):
 			# plt.figure(figsize = (20, 9))
 			df.set_index('HOUR', inplace = True)
 			df.replace(0, np.nan, inplace = True)
-			plot = sns.heatmap(df, annot = True, cbar = False, annot_kws={"fontsize":7}, vmin = 0, vmax = 10, colormap = 'brg')
+			plot = sns.heatmap(df, annot = True, cbar = False, annot_kws={"fontsize":7}, vmin = 0, vmax = 10, cmap = 'brg')
 			plot.set_xlabel('DAYS')
 			plot.set_yticklabels(['12MN','1AM','2AM','3AM','4AM','5AM','6AM','7AM','8AM','9AM','10AM','11AM','12NN','1PM','2PM','3PM','4PM','5PM','6PM','7PM','8PM','9PM','10PM','11PM'])
 			plot.set_ylabel('TIME')
