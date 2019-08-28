@@ -34,7 +34,7 @@ def plotHeatmap(data_dir):
 			plt.xticks(fontsize=8)
 			plt.vlines([31, 62, 90, 121, 151], *plot.get_ylim())
 			plt.tight_layout()
-			plt.savefig(data_dir+"/figures/"+f[:-4]+".png", dpi = 300)
+			plt.savefig(data_dir+"/figures/"+f[:-4]+".png", dpi = 600)
 			# plt.show()
 			plt.clf()
 
@@ -51,8 +51,8 @@ def plotHeatmap(data_dir):
 
 if __name__ == '__main__':
 	plotHeatmap("visualization/champions")
-	# plotHeatmap("visualization/loyal")
-	# plotHeatmap("visualization/promising")
-	# plotHeatmap("visualization/binge")
-	# plotHeatmap("visualization/atrisk")
-	# plotHeatmap("visualization/lost")
+	plotHeatmap("visualization/loyal")
+	plotHeatmap("visualization/promising")
+	plotHeatmap("visualization/binge")
+	plotHeatmap("visualization/atrisk")
+	plotHeatmap("visualization/lost")
