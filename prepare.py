@@ -21,7 +21,7 @@ style.use('bmh')
 def extractUser(users, df, outdir):
 	for user in df.USERID.unique():
 		if user in users:
-			print("here")
+			print(user)
 			temp = df.loc[df.USERID == user]
 			new_df = pd.DataFrame(index = list(range(0, 24)), columns = list(range(1, 183)))
 			for i in temp.index.unique():
