@@ -50,7 +50,7 @@ def plotHeatmap(data_dir):
 # 	print(i, value)
 
 if __name__ == '__main__':
-	plotHeatmap("visualization/champs")
+	plotHeatmap("visualization/champions")
 	plotHeatmap("visualization/loyal")
 	plotHeatmap("visualization/promising")
 	plotHeatmap("visualization/binge")
