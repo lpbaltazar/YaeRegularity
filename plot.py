@@ -23,7 +23,6 @@ def plotHeatmap(data_dir):
 		if f.endswith(".csv"):
 			df = pd.read_csv(os.path.join(data_dir, f))
 			plt.figure(figsize = (20, 9))
-			df.replace(hour, inplace = True)
 			df.set_index('HOUR', inplace = True)
 			df.replace(0, np.nan, inplace = True)
 			plot = sns.heatmap(df, annot = True, cbar = False, annot_kws={"fontsize":7}, vmin = 0, vmax = 10)
