@@ -32,7 +32,7 @@ def plotHeatmap(data_dir):
 			plt.yticks(fontsize=10, rotation=360)
 			plt.xticks(fontsize=8)
 			plt.vlines([31, 62, 90, 121, 151], *plot.get_ylim())
-			plt.savefig(data_dir+"/figures"+f[:-4]+".png")
+			plt.savefig(data_dir+"/figures/"+f[:-4]+".png")
 
 # unique = []
 # for i in df.columns:
