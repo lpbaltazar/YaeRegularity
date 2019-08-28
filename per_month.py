@@ -49,26 +49,9 @@ def combineMonth():
 			file = os.path.join(data_dir+'/'+str(content_type), f)
 			if len(new_df) == 0:
 				new_df = readChunk(file)
-				colnames = new_df.set_index('USERID').columns
-				for i in colnames:
-					new_df[i] = pd.to_numeric(new_df[i], errors = 'coerce')
 			else:
 				df = readChunk(file)
-				df.set_index('USERID', inplace = True)
-				colnames = df.columns
-				for i in colnames:
-					df[i] = pd.to_numeric(df[i], errors = 'coerce')
-				df.reset_index(inplace = True)
 				new_df = new_df.merge(df, how = 'left', on = 'USERID')
-				colnames = new_df.columns
-				same = []
-				for i in colnames:
-					if re.search('_', i): same.append(i)
-					new_df[i] = pd.to_numeric(new_df[i], errors = 'coerce')
-				new_col = re.search('([0-9]+)_', same[0])[1]
-				new_df[new_col] = new_df[same].apply(lambda x: 1 if x[0]+x[1] >= 1 else np.nan, axis =1)
-				new_df.drop(same, axis = 1, inplace = True)
-
 	new_df.set_index('USERID', inplace = True)
 	cols = new_df.columns
 	new_df['first_occurence'] = new_df.apply(func, axis = 1)
