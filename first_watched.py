@@ -9,13 +9,13 @@ import numpy as np
 from utils import readChunk, toCSV
 
 file = "all_month.csv"
-usecols = ['USERID', 'CONTENT_TYPE', 'SESSION_STARTDT_MONTH', 'SESSION_STARTDT_DAY', 'HOUR']
+usecols = ['USERID', 'CONTENT_TYPE', 'SESSION_STARTDT_MONTH', 'SESSION_STARTDT_DAY', 'STARTHOUR']
 df = readChunk(file, usecols = usecols)
 
 df = df.loc[df.SESSION_STARTDT_MONTH != '11']
 convert = {'12':'0'}
 df.replace({'SESSION_STARTDT_MONTH':convert}, inplace = True)
-toint = ['SESSION_STARTDT_MONTH', 'SESSION_STARTDT_DAY', 'HOUR']
+toint = ['SESSION_STARTDT_MONTH', 'SESSION_STARTDT_DAY', 'STARTHOUR']
 for i in toint:
 	df[i] = df[i].astype(int)
 df['ORDER'] = (df.SESSION_STARTDT_MONTH*100)+(df.SESSION_STARTDT_DAY*10)
@@ -34,10 +34,11 @@ df = df.merge(labels, how = 'left', on = 'USERID')
 for i in df.LABEL.unique():
 	print(i)
 	temp = df.loc[df.LABEL == i]
-	new_df = pd.DataFrame(index = list(range(1, 11)), columns = ['COUNT'])
+	new_df = pd.DataFrame(index = list(range(1, 11)), columns = list(range(0, 6)))
 	for j in df.CONTENT_TYPE.unique():
-		temp2 = temp.loc[temp.CONTENT_TYPE == j]
-		new_df.loc[int(j)]['COUNT'] = len(temp2)
+		for k in df.SESSION_STARTDT_MONTH.unique():
+			temp2 = temp.loc[(temp.CONTENT_TYPE == j) & (temp.SESSION_STARTDT_MONTH == k)]
+			new_df.loc[int(j)][k] = len(temp2)
 
 	print(new_df)
 	new_df.index.name = 'CONTENT_TYPE'
