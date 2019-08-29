@@ -18,7 +18,7 @@ df.replace({'SESSION_STARTDT_MONTH':convert}, inplace = True)
 toint = ['SESSION_STARTDT_MONTH', 'SESSION_STARTDT_DAY', 'STARTHOUR']
 for i in toint:
 	df[i] = df[i].astype(int)
-df['ORDER'] = df.SESSION_STARTDT_MONTH+df.SESSION_STARTDT_DAY+df.STARTHOUR
+df['ORDER'] = (df.SESSION_STARTDT_MONTH*100)+(df.SESSION_STARTDT_DAY*10)+df.STARTHOUR
 
 df.sort_values('ORDER', inplace = True)
 
