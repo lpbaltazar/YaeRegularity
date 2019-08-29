@@ -19,7 +19,7 @@ def removeNotLoggedIn(df):
 
 
 content_type = {'ABS-CBN - Show - Current': 1, 'ABS-CBN - Show - Old':2, 'Original Show':3, 'Original Movie':4, 'Movie':5, 'Live':6, 'Fast Cut':7, 'Other - Show':8, 'Preview':9, 'Trailer':10}
-keepcols = ['USERID', 'SESSIONID', 'CONTENT_TYPE', 'VIDEO_CATEGORY_TITLE', 'SESSION_STARTDT_MONTH', 'SESSION_STARTDT_DAY', 'STARTHOUR', 'ENDHOUR']
+keepcols = ['USERID', 'SESSIONID', 'CONTENT_TYPE', 'VIDEO_CATEGORY_TITLE', 'SESSION_STARTDT_MONTH', 'SESSION_STARTDT_DAY', 'STARTHOUR', 'ENDHOUR', 'DAY']
 
 
 def getCustomerDay(month, date):
