@@ -26,7 +26,7 @@ def extractUser(users, df, outdir):
 			new_df = pd.DataFrame(index = list(range(0, 24)), columns = list(range(1, 183)))
 			for i in temp.index.unique():
 				for j in range(temp.loc[i]['STARTHOUR'], temp.loc[i]['ENDHOUR']+1):
-					new_df.iloc[temp.loc[i][j]][temp.loc[i]['DAY']] = temp.loc[i]['CONTENT_TYPE']
+					new_df.iloc[j][temp.loc[i]['DAY']] = temp.loc[i]['CONTENT_TYPE']
 			new_df.index.name = 'HOUR'
 			new_df.fillna(0, inplace = True)
 			toCSV(new_df, outdir+user+".csv")
