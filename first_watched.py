@@ -12,12 +12,15 @@ file = "all_month.csv"
 usecols = ['USERID', 'CONTENT_TYPE', 'VIDEO_CATEGORY_TITLE', 'SESSION_STARTDT_MONTH', 'SESSION_STARTDT_DAY', 'STARTHOUR']
 df = readChunk(file, usecols = usecols)
 
-# convert = {'12':'0'}
-# df.replace({'SESSION_STARTDT_MONTH':convert}, inplace = True)
-# df['ORDER'] = df.SESSION_STARTDT_MONTH+df.SESSION_STARTDT_DAY+df.STARTHOUR
-# df.ORDER = df.ORDER.astype(int)
+df = df.loc[df.SESSION_STARTDT_MONTH != '11']
+convert = {'12':'0'}
+df.replace({'SESSION_STARTDT_MONTH':convert}, inplace = True)
+toint = ['SESSION_STARTDT_MONTH', 'SESSION_STARTDT_DAY', 'STARTHOUR']
+for i in toint:
+	df[i] = df[i].astype(int)
+df['ORDER'] = df.SESSION_STARTDT_MONTH+df.SESSION_STARTDT_DAY+df.STARTHOUR
 
-# df.sort_values('ORDER', inplace = True)
+df.sort_values('ORDER', inplace = True)
 
 print(len(df))
 df.drop_duplicates(subset = ['USERID'], keep = 'first', inplace = True)
